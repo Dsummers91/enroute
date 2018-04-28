@@ -14,18 +14,18 @@ contract Identity {
   
   // @param type Interface hash of record type
   // @param address address of member looking for access;
-  function setAccess(address _member, bool _hasAccess) {
+  function setAccess(address _member, bool _hasAccess, uint _type) {
     bytes4 senderInterface = interfaces[msg.sender];
-    access[keccak256(senderInterface, _member)] = _hasAccess;
+    access[keccak256(senderInterface, _member, _type)] = _hasAccess;
   }
 
   function setAddressInterface(address _addr, bytes4 _interface) public onlyOwner {
     interfaces[_addr] = _interface;
   }
 
-  function getAccess(address _contract, address _member) public view returns (bool) {
+  function getAccess(address _contract, address _member, uint _type) public view returns (bool) {
     bytes4 senderInterface = interfaces[_contract];
-    return access[keccak256(senderInterface, _member)];
+    return access[keccak256(senderInterface, _member, _type)];
   }
 
   modifier onlyOwner {

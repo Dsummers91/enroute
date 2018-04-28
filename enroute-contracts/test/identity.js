@@ -5,6 +5,7 @@ contract("should work dammit", (accounts) => {
   let contractInterface = "0xdeadbeef";
   let contract = accounts[1];
   let user = accounts[0];
+
   before(async () => {
     identity = await Identity.new();
   })
@@ -17,13 +18,18 @@ contract("should work dammit", (accounts) => {
   });
 
   it("should be able to give access", async() => {
-    await identity.setAccess(accounts[0], true, {from: contract});
-    let hasAccess = await identity.getAccess(contract, user);
+    await identity.setAccess(accounts[0], true, 0, {from: contract});
+    let hasAccess = await identity.getAccess(contract, user, 0);
     assert.isTrue(hasAccess);
   });
 
   it("should not have access for unset user", async() => {
-    let hasAccess = await identity.getAccess(contract, accounts[2]);
+    let hasAccess = await identity.getAccess(contract, accounts[2], 0);
+    assert.isFalse(hasAccess);
+  });
+
+  it("should not have access for unset type", async() => {
+    let hasAccess = await identity.getAccess(contract, user, 1);
     assert.isFalse(hasAccess);
   });
 });
