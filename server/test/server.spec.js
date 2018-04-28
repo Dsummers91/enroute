@@ -36,9 +36,10 @@ describe('loading express', function () {
       })
   });
 
+
   it('should return a shiphash', (done) => { 
     request(server)
-      .post('/ship')
+      .post('/ship/hash')
       .send({'skus': skus})
       .set('Accept', /application\/json/)
       .expect(200)
@@ -48,7 +49,6 @@ describe('loading express', function () {
           done();
       });
   });
-
 
   it('should confirm shipHash', function(done) {
     request(server)
@@ -60,7 +60,6 @@ describe('loading express', function () {
           assert(response.body.confirmed === true, true);
           done();
       })
-
 
   });
 
@@ -76,6 +75,31 @@ describe('loading express', function () {
           done();
       })
   });
+
+  it('should get correct shipment info', (done) => { 
+    request(server)
+      .post('/ship')
+      .send({'skus': skus, 'shipHash': shipHash})
+      .set('Accept', /application\/json/)
+      .expect(200)
+			.then((response) => {
+          assert(response.body.state == 1, true);
+          done();
+      });
+  });
+
+  it('should be able get delivery truck', (done) => {
+    request(server)
+      .post('/process')
+      .send({'actor': 'deliveryTruck', 'shipHash': shipHash})
+      .set('Accept', /application\/json/)
+      .expect(200)
+			.then((response) => {
+          assert(response.body.txHash.tx != null, true);
+          done();
+      })
+  });
+
 
   it('404 everything else', function testPath(done) {
     request(server)

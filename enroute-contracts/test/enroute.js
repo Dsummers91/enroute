@@ -41,6 +41,7 @@ contract("Enroute", (accounts) => {
 
   it('should be able to create a shipment when manufactuer', async() => {
     await enroute.confirmShipment(shipHash, {from: manufacturer});
+    assert.equal(+(await enroute.shipments(shipHash)), '1');
   });
 
   it('should not be able to shipment', async() => {

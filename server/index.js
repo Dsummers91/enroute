@@ -30,8 +30,7 @@ app.post('/process', async(req, res) => {
   if (!actors.hasOwnProperty(req.body.actor)) {
     return res.send({'error': 'actor does not exist! [manufacturer, deliveryTruck, superMarket]'});
   }
-
-  let tx = await enroute.confirmShipment(web3.sha3(Math.random().toString()), {from: web3.eth.accounts[4]}); 
+  let tx = await enroute.confirmShipment(req.body.shipHash, {from: web3.eth.accounts[actors[req.body.actor]]}); 
   res.send({txHash: tx});
 });
 
@@ -41,8 +40,15 @@ app.get('/sku', async (req, res) => {
 	res.send(await sku.generateSkuList());
 });
 
+app.post('/ship', async(req, res) => {
+  let enroute = await Enroute.deployed();
+  let state = await enroute.shipments(req.body.shipHash);
+  res.send({state: state});
+});
+
+
 // @dev Return XOR Hash of list of SKU's to give a ship identifier
-app.post('/ship', async (req, res) => {
+app.post('/ship/hash', async (req, res) => {
 	let shipHash;
   let skus = req.body.skus;
 	res.send({'shipHash': '0x' + skus.reduce((a, b) => {
@@ -69,7 +75,7 @@ app.post('/ship/confirm', async (req, res) => {
 	res.send({confirmed: hash == 0})
 });
 
-
+app.post
 server = app.listen(process.env.PORT || 8080, () => {
 	console.log('listening on port: ', process.env.PORT || 8080);
 })

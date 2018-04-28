@@ -1,7 +1,7 @@
 actors = {
-  manufacturer: 0,
-  deliveryTruck: 1,
-  superMarket: 2
+  manufacturer: 4,
+  deliveryTruck: 5,
+  superMarket: 6
 }
 
 module.exports = actors;
