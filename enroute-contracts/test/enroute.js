@@ -52,13 +52,8 @@ contract("Enroute", (accounts) => {
     }
   });
 
-  xit('should be able to move along supply chain', async() => {
-    assert.isTrue(false);
-  });
-
-
-  xit('should not let a user of wrong type confirm shipment', async() => {
-    assert.isTrue(false);
+  it('delivery truck should be able to process order', async() => {
+    await enroute.confirmShipment(shipHash, {from: deliveryTruck});
   });
 
 });
