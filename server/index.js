@@ -1,9 +1,34 @@
 const BN = require("bn.js");
 const app = require('express')()
 const Web3 = require('web3');
+const provider = new Web3.providers.HttpProvider("http://localhost:8545");
+let web3 = new Web3(provider);
 const sku = require('./sku.js');
+var contract = require("truffle-contract");
+const bodyParser = require('body-parser')
+const Identity = contract(require('../enroute-contracts/build/contracts/Identity.json'))
+const Enroute = contract(require('../enroute-contracts/build/contracts/Enroute.json'))
 
-let web3 = new Web3();
+Enroute.setProvider(provider);
+Identity.setProvider(provider);
+
+
+app.use(bodyParser.json());
+
+app.get('/enroute/identity', async(req, res) => {
+  let enroute = await Enroute.deployed();
+  let identity = await enroute.identity();
+  res.send({id: identity});
+});
+
+app.post('/process', async(req, res) => {
+  let enroute = await Enroute.deployed();
+ // try {
+ //   await enroute.confirmShipment(
+ // } catch(e) {
+//
+ // }
+});
 
 // @dev Returns list of SKU's that are being sent
 // @note Can probably just hardcode this?
@@ -44,8 +69,8 @@ app.post('/process/manufacturer', async (req, res) => {
   res.send({});
 });
 
-server = app.listen(8080, () => {
-	console.log('listening on port 8080');
+server = app.listen(process.env.PORT || 8080, () => {
+	console.log('listening on port: ', process.env.PORT || 8080);
 })
 
 module.exports = server;

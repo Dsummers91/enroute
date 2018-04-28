@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "mocha ./server/test/",
+    "test": "PORT=8081 mocha ./server/test/",
     "start": "node server/index.js",
     "dev": "nodemon server/index.js"
   },
@@ -13,8 +13,10 @@
   "license": "ISC",
   "dependencies": {
     "bn.js": "^4.11.8",
+    "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "mocha": "^5.1.1",
+    "truffle-contract": "^3.0.5",
     "web3": "^0.20.6"
   },
   "devDependencies": {
