@@ -36,10 +36,39 @@ describe('loading express', function () {
       })
   });
 
+  it('should return a shiphash', (done) => { 
+    request(server)
+      .post('/ship')
+      .send({'skus': skus})
+      .set('Accept', /application\/json/)
+      .expect(200)
+			.then((response) => {
+          assert(response.body.shipHash != null, true);
+          shipHash = response.body.shipHash;
+          done();
+      });
+  });
+
+
+  it('should confirm shipHash', function(done) {
+    request(server)
+      .post('/ship/confirm')
+      .send({'skus': skus, 'shipHash': shipHash})
+      .set('Accept', /application\/json/)
+      .expect(200)
+			.then(response => {
+          assert(response.body.confirmed === true, true);
+          done();
+      })
+
+
+  });
+
+
   it('should be able get manufacturer', (done) => {
     request(server)
       .post('/process')
-      .send({'actor': 'manufacturer'})
+      .send({'actor': 'manufacturer', 'shipHash': shipHash})
       .set('Accept', /application\/json/)
       .expect(200)
 			.then((response) => {

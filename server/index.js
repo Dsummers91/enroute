@@ -30,6 +30,7 @@ app.post('/process', async(req, res) => {
   if (!actors.hasOwnProperty(req.body.actor)) {
     return res.send({'error': 'actor does not exist! [manufacturer, deliveryTruck, superMarket]'});
   }
+
   let tx = await enroute.confirmShipment(web3.sha3(Math.random().toString()), {from: web3.eth.accounts[4]}); 
   res.send({txHash: tx});
 });
@@ -41,14 +42,14 @@ app.get('/sku', async (req, res) => {
 });
 
 // @dev Return XOR Hash of list of SKU's to give a ship identifier
-app.get('/ship', async (req, res) => {
+app.post('/ship', async (req, res) => {
 	let shipHash;
-  let skus = await sku.generateSkuList();
-	res.send('0x' + skus.reduce((a, b) => {
+  let skus = req.body.skus;
+	res.send({'shipHash': '0x' + skus.reduce((a, b) => {
 		a = new BN(web3.sha3(a), 16);
 		b = new BN(web3.sha3(b), 16);
 		return a.xor(b).toString(16);
-	}));
+	})});
 })
 
 // @dev reverse XOR hash to make sure all shipments are there
@@ -56,22 +57,18 @@ app.get('/ship', async (req, res) => {
 // @param skus List of skus within the hash
 // @note should equal 0x0 if skus match up
 // @todo will be a POST (shipHash, and skus as args)
-app.get('/ship/confirm', async (req, res) => {
-	let shipHash = '0x87a5396475b4411ad1568f099f17fe78cdc42241b9ad4d2405ca36f8e8550b9f3'.substr(2);
-  let skus = await sku.generateSkuList();
-	skus.push(shipHash);
+app.post('/ship/confirm', async (req, res) => {
+	let shipHash = req.body.shipHash.substr(2);
+	let skus = req.body.skus;
+  skus.push(shipHash);
 	let hash = skus.reduce((a, b) => {
-		a = new BN(a, 16);
-		b = new BN(b, 16);
+		a = new BN(web3.sha3(a), 16);
+		b = new BN(web3.sha3(b), 16);
 		return a.xor(b).toString(16);
 	});
 	res.send({confirmed: hash == 0})
 });
 
-
-app.post('/process/manufacturer', async (req, res) => {
-  res.send({});
-});
 
 server = app.listen(process.env.PORT || 8080, () => {
 	console.log('listening on port: ', process.env.PORT || 8080);
