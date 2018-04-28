@@ -4,7 +4,8 @@ const Web3 = require('web3');
 const provider = new Web3.providers.HttpProvider("http://localhost:8545");
 let web3 = new Web3(provider);
 const sku = require('./sku.js');
-var contract = require("truffle-contract");
+const contract = require("truffle-contract");
+const actors = require('./actors.js');
 const bodyParser = require('body-parser')
 const Identity = contract(require('../enroute-contracts/build/contracts/Identity.json'))
 const Enroute = contract(require('../enroute-contracts/build/contracts/Enroute.json'))
@@ -21,13 +22,14 @@ app.get('/enroute/identity', async(req, res) => {
   res.send({id: identity});
 });
 
+
+// @param actor
+// @param shipHash 
 app.post('/process', async(req, res) => {
   let enroute = await Enroute.deployed();
- // try {
- //   await enroute.confirmShipment(
- // } catch(e) {
-//
- // }
+  if (!actors.hasOwnProperty(req.body.actor))
+    return res.send({'error': 'actor does not exist! [manufacturer, deliveryTruck, superMarket]'});
+  res.send(req.body);
 });
 
 // @dev Returns list of SKU's that are being sent

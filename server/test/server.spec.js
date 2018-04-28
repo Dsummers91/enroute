@@ -24,6 +24,28 @@ describe('loading express', function () {
       })
   });
 
+  it('should return an error for nonactor', () => {
+    return request(server)
+      .post('/process')
+      .send({'actor': 'faker'})
+      .set('Accept', /application\/json/)
+      .expect(200)
+			.then(response => {
+          assert(response.body.error,'actor does not exist! [manufacturer, deliveryTruck, superMarket]');
+      })
+  });
+
+  it('should be able get manufacturer', () => {
+    return request(server)
+      .post('/process')
+      .send({'actor': 'faker'})
+      .set('Accept', /application\/json/)
+      .expect(200)
+			.then(response => {
+          assert(response.body.error,'actor does not exist! [manufacturer, deliveryTruck, superMarket]');
+      })
+  });
+
   it('404 everything else', function testPath(done) {
     request(server)
       .get('/')
