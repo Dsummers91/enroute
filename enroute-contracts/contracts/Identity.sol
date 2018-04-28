@@ -19,7 +19,7 @@ contract Identity {
     access[keccak256(senderInterface, _member)] = _hasAccess;
   }
 
-  function setAddressInterface(address _addr, bytes4 _interface) onlyOwner {
+  function setAddressInterface(address _addr, bytes4 _interface) public onlyOwner {
     interfaces[_addr] = _interface;
   }
 

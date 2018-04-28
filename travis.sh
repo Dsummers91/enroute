@@ -1,6 +1,6 @@
 #!/bin/bash
 
-ganache-cli 2>&1 /dev/null &
+ganache-cli >/dev/null 2>&1 &
 sleep 10
 cd enroute-contracts/
 truffle test
