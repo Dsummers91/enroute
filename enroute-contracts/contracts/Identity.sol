@@ -14,8 +14,8 @@ contract Identity {
   
   // @param type Interface hash of record type
   // @param address address of member looking for access;
-  function setAccess(address _member, bool _hasAccess, uint _type) {
-    bytes4 senderInterface = interfaces[msg.sender];
+  function setAccess(address _contract, address _member, bool _hasAccess, uint _type) {
+    bytes4 senderInterface = interfaces[_contract];
     access[keccak256(senderInterface, _member, _type)] = _hasAccess;
   }
 

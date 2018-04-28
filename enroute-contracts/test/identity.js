@@ -18,7 +18,7 @@ contract("should work dammit", (accounts) => {
   });
 
   it("should be able to give access", async() => {
-    await identity.setAccess(accounts[0], true, 0, {from: contract});
+    await identity.setAccess(contract, accounts[0], true, 0, {from: contract});
     let hasAccess = await identity.getAccess(contract, user, 0);
     assert.isTrue(hasAccess);
   });
