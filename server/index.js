@@ -12,7 +12,7 @@ const skus = [
 // @dev Returns list of SKU's that are being sent
 // @note Can probably just hardcode this?
 app.get('/sku', (req, res) => {
-	res.send([]);
+	res.send(skus);
 });
 
 // @dev Return XOR Hash of list of SKU's to give a ship identifier
@@ -21,7 +21,7 @@ app.get('/ship', (req, res) => {
 	res.send('0x' + skus.reduce((a, b) => {
 		a = new BN(a, 16);
 		b = new BN(b, 16);
-		return a.xor(b).toString(16);i
+		return a.xor(b).toString(16);
 	}));
 })
 
@@ -33,11 +33,12 @@ app.get('/ship', (req, res) => {
 app.get('/ship/confirm', (req, res) => {
 	let shipHash = '0x87a5396475b4411ad1568f099f17fe78cdc42241b9ad4d2405ca36f8e8550b9f3'.substr(2);
 	skus.push(shipHash);
-	res.send('0x' + skus.reduce((a, b) => {
+	let hash = skus.reduce((a, b) => {
 		a = new BN(a, 16);
 		b = new BN(b, 16);
 		return a.xor(b).toString(16);
-	}));
+	});
+	res.send({confirmed: hash == 0})
 });
 
 app.listen(8080, () => {

@@ -2,30 +2,53 @@
   "contractName": "Enroute",
   "abi": [
     {
+      "constant": true,
+      "inputs": [],
+      "name": "owner",
+      "outputs": [
+        {
+          "name": "",
+          "type": "address"
+        }
+      ],
+      "payable": false,
+      "stateMutability": "view",
+      "type": "function"
+    },
+    {
       "inputs": [],
       "payable": false,
       "stateMutability": "nonpayable",
       "type": "constructor"
+    },
+    {
+      "constant": false,
+      "inputs": [],
+      "name": "confirmShipment",
+      "outputs": [],
+      "payable": false,
+      "stateMutability": "nonpayable",
+      "type": "function"
     }
   ],
-  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a72305820e54b6fd41b846cf52841bc1dbfdd16bcdb89e3ef6b1f8d405ca57255d12552020029",
-  "deployedBytecode": "0x6080604052600080fd00a165627a7a72305820e54b6fd41b846cf52841bc1dbfdd16bcdb89e3ef6b1f8d405ca57255d12552020029",
-  "sourceMap": "27:122:0:-;;;121:25;8:9:-1;5:2;;;30:1;27;20:12;5:2;121:25:0;27:122;;;;;;",
-  "deployedSourceMap": "27:122:0:-;;;;;",
-  "source": "pragma solidity ^0.4.19;\n\n\ncontract Enroute {\n  enum Actor {\n    Manufacturer,\n    DeliveryTruck,\n    Supermarket\n  }\n\n  function Enroute() {\n\n  }\n\n}\n",
+  "bytecode": "0x608060405234801561001057600080fd5b50336000806101000a81548173ffffffffffffffffffffffffffffffffffffffff021916908373ffffffffffffffffffffffffffffffffffffffff160217905550610109806100606000396000f3006080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638da5cb5b14604e578063feb71d9a1460a2575b600080fd5b348015605957600080fd5b50606060b6565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801560ad57600080fd5b5060b460db565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b5600a165627a7a72305820fb11f67de3ed490f958ccc6260c80c1f6d06f504cad8b8af7b93f17f0371159c0029",
+  "deployedBytecode": "0x6080604052600436106049576000357c0100000000000000000000000000000000000000000000000000000000900463ffffffff1680638da5cb5b14604e578063feb71d9a1460a2575b600080fd5b348015605957600080fd5b50606060b6565b604051808273ffffffffffffffffffffffffffffffffffffffff1673ffffffffffffffffffffffffffffffffffffffff16815260200191505060405180910390f35b34801560ad57600080fd5b5060b460db565b005b6000809054906101000a900473ffffffffffffffffffffffffffffffffffffffff1681565b5600a165627a7a72305820fb11f67de3ed490f958ccc6260c80c1f6d06f504cad8b8af7b93f17f0371159c0029",
+  "sourceMap": "27:296:1:-;;;238:43;8:9:-1;5:2;;;30:1;27;20:12;5:2;238:43:1;266:10;258:5;;:18;;;;;;;;;;;;;;;;;;27:296;;;;;;",
+  "deployedSourceMap": "27:296:1:-;;;;;;;;;;;;;;;;;;;;;;;;;;;;;48:20;;8:9:-1;5:2;;;30:1;27;20:12;5:2;48:20:1;;;;;;;;;;;;;;;;;;;;;;;;;;;287:34;;8:9:-1;5:2;;;30:1;27;20:12;5:2;287:34:1;;;;;;48:20;;;;;;;;;;;;;:::o;287:34::-;:::o",
+  "source": "pragma solidity ^0.4.19;\n\n\ncontract Enroute {\n  address public owner;\n  mapping (bytes32 => Shipment) shipments;\n\n  enum Actor {\n    Manufacturer,\n    DeliveryTruck,\n    Supermarket\n  }\n\n  struct Shipment {\n    Actor currentOwner;\n  }\n\n  constructor() {\n    owner = msg.sender;\n  }\n  \n  function confirmShipment() {\n\n\n  }\n}\n",
   "sourcePath": "/home/deon/enroute-db/enroute-contracts/contracts/Enroute.sol",
   "ast": {
     "absolutePath": "/home/deon/enroute-db/enroute-contracts/contracts/Enroute.sol",
     "exportedSymbols": {
       "Enroute": [
-        10
+        92
       ]
     },
-    "id": 11,
+    "id": 93,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1,
+        "id": 65,
         "literals": [
           "solidity",
           "^",
@@ -33,7 +56,7 @@
           ".19"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:24:0"
+        "src": "0:24:1"
       },
       {
         "baseContracts": [],
@@ -41,93 +64,302 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 10,
+        "id": 92,
         "linearizedBaseContracts": [
-          10
+          92
         ],
         "name": "Enroute",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
+            "constant": false,
+            "id": 67,
+            "name": "owner",
+            "nodeType": "VariableDeclaration",
+            "scope": 92,
+            "src": "48:20:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 66,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "48:7:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 71,
+            "name": "shipments",
+            "nodeType": "VariableDeclaration",
+            "scope": 92,
+            "src": "72:39:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Shipment_$78_storage_$",
+              "typeString": "mapping(bytes32 => struct Enroute.Shipment)"
+            },
+            "typeName": {
+              "id": 70,
+              "keyType": {
+                "id": 68,
+                "name": "bytes32",
+                "nodeType": "ElementaryTypeName",
+                "src": "81:7:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "72:29:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Shipment_$78_storage_$",
+                "typeString": "mapping(bytes32 => struct Enroute.Shipment)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 69,
+                "name": "Shipment",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 78,
+                "src": "92:8:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Shipment_$78_storage_ptr",
+                  "typeString": "struct Enroute.Shipment"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
             "canonicalName": "Enroute.Actor",
-            "id": 5,
+            "id": 75,
             "members": [
               {
-                "id": 2,
+                "id": 72,
                 "name": "Manufacturer",
                 "nodeType": "EnumValue",
-                "src": "65:12:0"
+                "src": "133:12:1"
               },
               {
-                "id": 3,
+                "id": 73,
                 "name": "DeliveryTruck",
                 "nodeType": "EnumValue",
-                "src": "83:13:0"
+                "src": "151:13:1"
               },
               {
-                "id": 4,
+                "id": 74,
                 "name": "Supermarket",
                 "nodeType": "EnumValue",
-                "src": "102:11:0"
+                "src": "170:11:1"
               }
             ],
             "name": "Actor",
             "nodeType": "EnumDefinition",
-            "src": "48:69:0"
+            "src": "116:69:1"
+          },
+          {
+            "canonicalName": "Enroute.Shipment",
+            "id": 78,
+            "members": [
+              {
+                "constant": false,
+                "id": 77,
+                "name": "currentOwner",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "211:18:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_Actor_$75",
+                  "typeString": "enum Enroute.Actor"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 76,
+                  "name": "Actor",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 75,
+                  "src": "211:5:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Actor_$75",
+                    "typeString": "enum Enroute.Actor"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Shipment",
+            "nodeType": "StructDefinition",
+            "scope": 92,
+            "src": "189:45:1",
+            "visibility": "public"
           },
           {
             "body": {
-              "id": 8,
+              "id": 86,
               "nodeType": "Block",
-              "src": "140:6:0",
-              "statements": []
+              "src": "252:29:1",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 84,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 81,
+                      "name": "owner",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 67,
+                      "src": "258:5:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 82,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 107,
+                        "src": "266:3:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 83,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "sender",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "266:10:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "258:18:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 85,
+                  "nodeType": "ExpressionStatement",
+                  "src": "258:18:1"
+                }
+              ]
             },
             "documentation": null,
-            "id": 9,
+            "id": 87,
             "implemented": true,
             "isConstructor": true,
             "isDeclaredConst": false,
             "modifiers": [],
-            "name": "Enroute",
+            "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 6,
+              "id": 79,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "137:2:0"
+              "src": "249:2:1"
             },
             "payable": false,
             "returnParameters": {
-              "id": 7,
+              "id": 80,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "140:0:0"
+              "src": "252:0:1"
             },
-            "scope": 10,
-            "src": "121:25:0",
+            "scope": 92,
+            "src": "238:43:1",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 90,
+              "nodeType": "Block",
+              "src": "314:7:1",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 91,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "confirmShipment",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 88,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "311:2:1"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 89,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "314:0:1"
+            },
+            "scope": 92,
+            "src": "287:34:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 11,
-        "src": "27:122:0"
+        "scope": 93,
+        "src": "27:296:1"
       }
     ],
-    "src": "0:150:0"
+    "src": "0:324:1"
   },
   "legacyAST": {
     "absolutePath": "/home/deon/enroute-db/enroute-contracts/contracts/Enroute.sol",
     "exportedSymbols": {
       "Enroute": [
-        10
+        92
       ]
     },
-    "id": 11,
+    "id": 93,
     "nodeType": "SourceUnit",
     "nodes": [
       {
-        "id": 1,
+        "id": 65,
         "literals": [
           "solidity",
           "^",
@@ -135,7 +367,7 @@
           ".19"
         ],
         "nodeType": "PragmaDirective",
-        "src": "0:24:0"
+        "src": "0:24:1"
       },
       {
         "baseContracts": [],
@@ -143,80 +375,289 @@
         "contractKind": "contract",
         "documentation": null,
         "fullyImplemented": true,
-        "id": 10,
+        "id": 92,
         "linearizedBaseContracts": [
-          10
+          92
         ],
         "name": "Enroute",
         "nodeType": "ContractDefinition",
         "nodes": [
           {
+            "constant": false,
+            "id": 67,
+            "name": "owner",
+            "nodeType": "VariableDeclaration",
+            "scope": 92,
+            "src": "48:20:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_address",
+              "typeString": "address"
+            },
+            "typeName": {
+              "id": 66,
+              "name": "address",
+              "nodeType": "ElementaryTypeName",
+              "src": "48:7:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_address",
+                "typeString": "address"
+              }
+            },
+            "value": null,
+            "visibility": "public"
+          },
+          {
+            "constant": false,
+            "id": 71,
+            "name": "shipments",
+            "nodeType": "VariableDeclaration",
+            "scope": 92,
+            "src": "72:39:1",
+            "stateVariable": true,
+            "storageLocation": "default",
+            "typeDescriptions": {
+              "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Shipment_$78_storage_$",
+              "typeString": "mapping(bytes32 => struct Enroute.Shipment)"
+            },
+            "typeName": {
+              "id": 70,
+              "keyType": {
+                "id": 68,
+                "name": "bytes32",
+                "nodeType": "ElementaryTypeName",
+                "src": "81:7:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_bytes32",
+                  "typeString": "bytes32"
+                }
+              },
+              "nodeType": "Mapping",
+              "src": "72:29:1",
+              "typeDescriptions": {
+                "typeIdentifier": "t_mapping$_t_bytes32_$_t_struct$_Shipment_$78_storage_$",
+                "typeString": "mapping(bytes32 => struct Enroute.Shipment)"
+              },
+              "valueType": {
+                "contractScope": null,
+                "id": 69,
+                "name": "Shipment",
+                "nodeType": "UserDefinedTypeName",
+                "referencedDeclaration": 78,
+                "src": "92:8:1",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_struct$_Shipment_$78_storage_ptr",
+                  "typeString": "struct Enroute.Shipment"
+                }
+              }
+            },
+            "value": null,
+            "visibility": "internal"
+          },
+          {
             "canonicalName": "Enroute.Actor",
-            "id": 5,
+            "id": 75,
             "members": [
               {
-                "id": 2,
+                "id": 72,
                 "name": "Manufacturer",
                 "nodeType": "EnumValue",
-                "src": "65:12:0"
+                "src": "133:12:1"
               },
               {
-                "id": 3,
+                "id": 73,
                 "name": "DeliveryTruck",
                 "nodeType": "EnumValue",
-                "src": "83:13:0"
+                "src": "151:13:1"
               },
               {
-                "id": 4,
+                "id": 74,
                 "name": "Supermarket",
                 "nodeType": "EnumValue",
-                "src": "102:11:0"
+                "src": "170:11:1"
               }
             ],
             "name": "Actor",
             "nodeType": "EnumDefinition",
-            "src": "48:69:0"
+            "src": "116:69:1"
+          },
+          {
+            "canonicalName": "Enroute.Shipment",
+            "id": 78,
+            "members": [
+              {
+                "constant": false,
+                "id": 77,
+                "name": "currentOwner",
+                "nodeType": "VariableDeclaration",
+                "scope": 78,
+                "src": "211:18:1",
+                "stateVariable": false,
+                "storageLocation": "default",
+                "typeDescriptions": {
+                  "typeIdentifier": "t_enum$_Actor_$75",
+                  "typeString": "enum Enroute.Actor"
+                },
+                "typeName": {
+                  "contractScope": null,
+                  "id": 76,
+                  "name": "Actor",
+                  "nodeType": "UserDefinedTypeName",
+                  "referencedDeclaration": 75,
+                  "src": "211:5:1",
+                  "typeDescriptions": {
+                    "typeIdentifier": "t_enum$_Actor_$75",
+                    "typeString": "enum Enroute.Actor"
+                  }
+                },
+                "value": null,
+                "visibility": "internal"
+              }
+            ],
+            "name": "Shipment",
+            "nodeType": "StructDefinition",
+            "scope": 92,
+            "src": "189:45:1",
+            "visibility": "public"
           },
           {
             "body": {
-              "id": 8,
+              "id": 86,
               "nodeType": "Block",
-              "src": "140:6:0",
-              "statements": []
+              "src": "252:29:1",
+              "statements": [
+                {
+                  "expression": {
+                    "argumentTypes": null,
+                    "id": 84,
+                    "isConstant": false,
+                    "isLValue": false,
+                    "isPure": false,
+                    "lValueRequested": false,
+                    "leftHandSide": {
+                      "argumentTypes": null,
+                      "id": 81,
+                      "name": "owner",
+                      "nodeType": "Identifier",
+                      "overloadedDeclarations": [],
+                      "referencedDeclaration": 67,
+                      "src": "258:5:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "nodeType": "Assignment",
+                    "operator": "=",
+                    "rightHandSide": {
+                      "argumentTypes": null,
+                      "expression": {
+                        "argumentTypes": null,
+                        "id": 82,
+                        "name": "msg",
+                        "nodeType": "Identifier",
+                        "overloadedDeclarations": [],
+                        "referencedDeclaration": 107,
+                        "src": "266:3:1",
+                        "typeDescriptions": {
+                          "typeIdentifier": "t_magic_message",
+                          "typeString": "msg"
+                        }
+                      },
+                      "id": 83,
+                      "isConstant": false,
+                      "isLValue": false,
+                      "isPure": false,
+                      "lValueRequested": false,
+                      "memberName": "sender",
+                      "nodeType": "MemberAccess",
+                      "referencedDeclaration": null,
+                      "src": "266:10:1",
+                      "typeDescriptions": {
+                        "typeIdentifier": "t_address",
+                        "typeString": "address"
+                      }
+                    },
+                    "src": "258:18:1",
+                    "typeDescriptions": {
+                      "typeIdentifier": "t_address",
+                      "typeString": "address"
+                    }
+                  },
+                  "id": 85,
+                  "nodeType": "ExpressionStatement",
+                  "src": "258:18:1"
+                }
+              ]
             },
             "documentation": null,
-            "id": 9,
+            "id": 87,
             "implemented": true,
             "isConstructor": true,
             "isDeclaredConst": false,
             "modifiers": [],
-            "name": "Enroute",
+            "name": "",
             "nodeType": "FunctionDefinition",
             "parameters": {
-              "id": 6,
+              "id": 79,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "137:2:0"
+              "src": "249:2:1"
             },
             "payable": false,
             "returnParameters": {
-              "id": 7,
+              "id": 80,
               "nodeType": "ParameterList",
               "parameters": [],
-              "src": "140:0:0"
+              "src": "252:0:1"
             },
-            "scope": 10,
-            "src": "121:25:0",
+            "scope": 92,
+            "src": "238:43:1",
+            "stateMutability": "nonpayable",
+            "superFunction": null,
+            "visibility": "public"
+          },
+          {
+            "body": {
+              "id": 90,
+              "nodeType": "Block",
+              "src": "314:7:1",
+              "statements": []
+            },
+            "documentation": null,
+            "id": 91,
+            "implemented": true,
+            "isConstructor": false,
+            "isDeclaredConst": false,
+            "modifiers": [],
+            "name": "confirmShipment",
+            "nodeType": "FunctionDefinition",
+            "parameters": {
+              "id": 88,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "311:2:1"
+            },
+            "payable": false,
+            "returnParameters": {
+              "id": 89,
+              "nodeType": "ParameterList",
+              "parameters": [],
+              "src": "314:0:1"
+            },
+            "scope": 92,
+            "src": "287:34:1",
             "stateMutability": "nonpayable",
             "superFunction": null,
             "visibility": "public"
           }
         ],
-        "scope": 11,
-        "src": "27:122:0"
+        "scope": 93,
+        "src": "27:296:1"
       }
     ],
-    "src": "0:150:0"
+    "src": "0:324:1"
   },
   "compiler": {
     "name": "solc",
@@ -224,5 +665,5 @@
   },
   "networks": {},
   "schemaVersion": "2.0.0",
-  "updatedAt": "2018-04-28T02:22:58.977Z"
+  "updatedAt": "2018-04-28T03:03:08.193Z"
 }
