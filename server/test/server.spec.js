@@ -3,6 +3,8 @@ var server = require('../index.js');
 var assert = require('assert');
 
 describe('loading express', function () {
+  let skus, shipHash;
+
   it('responds to /sku', function testSlash() {
     return request(server)
       .get('/sku')
@@ -13,6 +15,15 @@ describe('loading express', function () {
   });
 
 	
+  it('receives identity contract', () => {
+    return request(server)
+      .get('/enroute/identity')
+      .expect(200)
+			.then(response => {
+          assert(response.body.id != null, true);
+      })
+  });
+
   it('404 everything else', function testPath(done) {
     request(server)
       .get('/')
