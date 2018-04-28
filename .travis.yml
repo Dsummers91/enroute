@@ -13,4 +13,4 @@ matrix:
 
 script: 
 - bash scripts/travis-truffle.sh
-- bash scripts/travis-server.sh
+- npm test 
