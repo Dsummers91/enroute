@@ -27,9 +27,11 @@ app.get('/enroute/identity', async(req, res) => {
 // @param shipHash 
 app.post('/process', async(req, res) => {
   let enroute = await Enroute.deployed();
-  if (!actors.hasOwnProperty(req.body.actor))
+  if (!actors.hasOwnProperty(req.body.actor)) {
     return res.send({'error': 'actor does not exist! [manufacturer, deliveryTruck, superMarket]'});
-  res.send(req.body);
+  }
+  let tx = await enroute.confirmShipment(web3.sha3(Math.random().toString()), {from: web3.eth.accounts[4]}); 
+  res.send({txHash: tx});
 });
 
 // @dev Returns list of SKU's that are being sent

@@ -10,6 +10,7 @@ describe('loading express', function () {
       .get('/sku')
       .expect(200)
 			.then(response => {
+          skus = response.body;
           assert(response.body.length, 6);
       })
   });
@@ -35,14 +36,15 @@ describe('loading express', function () {
       })
   });
 
-  it('should be able get manufacturer', () => {
-    return request(server)
+  it('should be able get manufacturer', (done) => {
+    request(server)
       .post('/process')
-      .send({'actor': 'faker'})
+      .send({'actor': 'manufacturer'})
       .set('Accept', /application\/json/)
       .expect(200)
-			.then(response => {
-          assert(response.body.error,'actor does not exist! [manufacturer, deliveryTruck, superMarket]');
+			.then((response) => {
+          assert(response.body.txHash.tx != null, true);
+          done();
       })
   });
 
