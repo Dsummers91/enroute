@@ -12,5 +12,5 @@ matrix:
       - npm install -g truffle ganache-cli
 
 script: 
-- bash ./travis.sh
-- npm test
+- bash scripts/travis-truffle.sh
+- bash scripts/travis-server.sh
