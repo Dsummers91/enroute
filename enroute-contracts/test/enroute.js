@@ -4,6 +4,7 @@ var Enroute  = artifacts.require("./Enroute.sol");
 contract("Enroute", (accounts) => {
   let identity;
   let contractInterface = "0xdeadbeef";
+  let shipHash = web3.sha3('blah');
   let user = accounts[0];
   let manufacturer = accounts[4];
   let deliveryTruck = accounts[5];
@@ -30,7 +31,6 @@ contract("Enroute", (accounts) => {
   });
 
   it('should not be able to create a shipment when not manufactuer', async() => {
-    let shipHash = web3.sha3('blah');
     try {
       await enroute.confirmShipment(shipHash, {from: deliveryTruck});
       assert.isTrue(false, 'transaction did not throw error');
@@ -40,12 +40,10 @@ contract("Enroute", (accounts) => {
   });
 
   it('should be able to create a shipment when manufactuer', async() => {
-    let shipHash = web3.sha3('blah');
     await enroute.confirmShipment(shipHash, {from: manufacturer});
   });
 
   it('should not be able to shipment', async() => {
-    let shipHash = web3.sha3('blah');
     try {
       await enroute.confirmShipment(shipHash, {from: manufacturer});
       assert.isTrue(false, 'transaction did not throw error');

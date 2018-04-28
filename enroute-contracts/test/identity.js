@@ -1,6 +1,6 @@
 var Identity = artifacts.require("./Identity.sol");
 
-contract("should work dammit", (accounts) => {
+contract("Identity", (accounts) => {
   let identity;
   let contractInterface = "0xdeadbeef";
   let contract = accounts[1];
