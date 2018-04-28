@@ -12,6 +12,11 @@ describe('loading express', function () {
       .get('/')
       .expect(404, done);
   });
+
+  after((done) => {
+    server.close()
+    done();
+  });
 });
 
 

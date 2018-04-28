@@ -44,9 +44,10 @@ app.post('/process/manufacturer', async (req, res) => {
   res.send({});
 });
 
-app.listen(8080, () => {
+server = app.listen(8080, () => {
 	console.log('listening on port 8080');
 })
 
+module.exports = server;
 
-module.exports = app;
+
