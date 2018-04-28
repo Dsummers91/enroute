@@ -7,7 +7,7 @@ contract Enroute {
   mapping (bytes32 => uint) public shipments;
   Identity public identity;
 
-  event ShipmentProcessed(bytes32 indexed hash, address processor);
+  event ShipmentProcessed(bytes32 indexed hash, address indexed processor);
   
   constructor(address _identity) {
     owner = msg.sender;  
