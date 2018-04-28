@@ -4,7 +4,7 @@ const assert = require('assert');
 describe('Sku', () => {
   it('should generate a list of skus', async() => {
     let skus = await sku.generateSkuList()
-    return assert.equal(skus.length, 6);
+    return assert.equal(skus.length, 7);
   });
 
 });
