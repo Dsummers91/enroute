@@ -64,6 +64,18 @@ describe('loading express', function () {
   });
 
 
+  it('should get correct shipment info', (done) => { 
+    request(server)
+      .post('/ship')
+      .send({'skus': skus, 'shipHash': shipHash})
+      .set('Accept', /application\/json/)
+      .expect(200)
+			.then((response) => {
+          assert(response.body.state == 0, true);
+          done();
+      });
+  });
+
   it('should be able get manufacturer', (done) => {
     request(server)
       .post('/process')
@@ -101,6 +113,29 @@ describe('loading express', function () {
   });
 
 
+  it('should get correct shipment info', (done) => { 
+    request(server)
+      .post('/ship')
+      .send({'skus': skus, 'shipHash': shipHash})
+      .set('Accept', /application\/json/)
+      .expect(200)
+			.then((response) => {
+          assert(response.body.state == 2, true);
+          done();
+      });
+  });
+
+  it('should be able get supermarket', (done) => {
+    request(server)
+      .post('/process')
+      .send({'actor': 'superMarket', 'shipHash': shipHash})
+      .set('Accept', /application\/json/)
+      .expect(200)
+			.then((response) => {
+          assert(response.body.txHash.tx != null, true);
+          done();
+      })
+  });
   it('404 everything else', function testPath(done) {
     request(server)
       .get('/')
