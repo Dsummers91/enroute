@@ -7,14 +7,8 @@ contract Enroute {
   mapping (bytes32 => Shipment) shipments;
   Identity public identity;
 
-  enum Actor {
-    Manufacturer,
-    DeliveryTruck,
-    Supermarket
-  }
-
   struct Shipment {
-    Actor currentOwner;
+    uint state;
   }
 
   constructor(address _identity) {
@@ -23,12 +17,12 @@ contract Enroute {
   }
   
   function confirmShipment(bytes32 _shipment) canShip(_shipment) {
-    
+    shipments[_shipment].state += 1; 
   }
 
 
   modifier canShip(bytes32 _shipment) {
-    uint state = uint(shipments[_shipment].currentOwner);
+    uint state = shipments[_shipment].state;
     require(identity.getAccess(this, msg.sender, state));
     _;
   }

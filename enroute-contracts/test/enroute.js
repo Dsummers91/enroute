@@ -4,12 +4,19 @@ var Enroute  = artifacts.require("./Enroute.sol");
 contract("Enroute", (accounts) => {
   let identity;
   let contractInterface = "0xdeadbeef";
-  let contract = accounts[1];
   let user = accounts[0];
+  let manufacturer = accounts[4];
+  let deliveryTruck = accounts[5];
+  let supermarket = accounts[6];
 
   before(async () => {
     identity = await Identity.new();
     enroute = await Enroute.new(identity.address);
+    
+    // Allow person to create shipment (manufacturer)
+    await identity.setAccess(enroute.address, manufacturer, true, 0);
+    await identity.setAccess(enroute.address, deliveryTruck, true, 1);
+    await identity.setAccess(enroute.address, supermarket, true, 2);
   });
 
   it('should have an owner', async() => {
@@ -22,8 +29,29 @@ contract("Enroute", (accounts) => {
     assert.equal(id, identity.address);
   });
 
-  xit('should be able to create a shipment', async() => {
-    assert.isTrue(false);
+  it('should not be able to create a shipment when not manufactuer', async() => {
+    let shipHash = web3.sha3('blah');
+    try {
+      await enroute.confirmShipment(shipHash, {from: deliveryTruck});
+      assert.isTrue(false, 'transaction did not throw error');
+    } catch (e) {
+      assert.isTrue(true);
+    }
+  });
+
+  it('should be able to create a shipment when manufactuer', async() => {
+    let shipHash = web3.sha3('blah');
+    await enroute.confirmShipment(shipHash, {from: manufacturer});
+  });
+
+  it('should not be able to shipment', async() => {
+    let shipHash = web3.sha3('blah');
+    try {
+      await enroute.confirmShipment(shipHash, {from: manufacturer});
+      assert.isTrue(false, 'transaction did not throw error');
+    } catch(e) {
+      assert.isTrue(true);
+    }
   });
 
   xit('should be able to move along supply chain', async() => {
