@@ -23,6 +23,10 @@ contract Identity {
     interfaces[_addr] = _interface;
   }
 
+  function getAccess(address _contract, address _member) public view returns (bool) {
+    bytes4 senderInterface = interfaces[_contract];
+    return access[keccak256(senderInterface, _member)];
+  }
 
   modifier onlyOwner {
     require(msg.sender == owner);
