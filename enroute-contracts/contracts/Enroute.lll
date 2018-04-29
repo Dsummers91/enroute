@@ -13,8 +13,8 @@
   (def '*owner*            0x00)
   
   ;; Function Hashes
-  (def '*confirm-shipment*       0x00000000) ;; confirmShipment(bytes32)
-  (def '*can-ship*               0x00000000) ;; owner()
+  (def '*confirm-shipment*       0xb60f3ec6) ;; confirmShipment(bytes32)
+  (def '*can-ship*               0x8da5cb5b) ;; owner()
   (def '*shipments*              0xd87b4041) ;; shipments(bytes32) 
   (def '*access*                 0x6d43c4c9) ;; access(bytes32)
   (def '*get-access*             0x42082e50) ;; getAccess(address,address,uint256)
@@ -39,8 +39,5 @@
   (when(callvalue)
     (panic))
   (sstore *owner* (caller))
-
-  (codecopy *scratch1* (bytecodesize) 32)
-  (sstore *identity* (mload *scratch1*))
 
 )
