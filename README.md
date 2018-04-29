@@ -18,8 +18,7 @@ var abi = [{"constant":true,"inputs":[],"name":"identity","outputs":[{"name":"",
 
 var contract = web3.eth.contract(abi).new("", {data: bin, from: web3.eth.coinbase, gas: 2000000})
 
-contract.getAccess(web3.eth.coinbase, web3.eth.accounts[1], 1, {from: web3.eth.coinbase, gas: 2000000})
-
+contract.confirmShipment(web3.sha3("test"), {from: web3.eth.coinbase, gas: 500000})
 contract.shipments.call(web3.sha3("test"))
 
 contract.setAccess(web3.eth.coinbase, web3.eth.accounts[4], true, 0, {from: web3.eth.coinbase, gas: 2000000})
