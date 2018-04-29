@@ -1,6 +1,5 @@
 ;;; Enroute/Identity contract In LLL!
 ;;; Combining both contracts into one file to not worry about CALL opcode shenanigans, ya feel me
-
 (seq
 
   ;; Memory Locations
@@ -8,6 +7,7 @@
   (def '*scratch2* 0x20)
   (def '*scratch3* 0x40)
   (def '*funcid*   0x60)
+  (def '*scratch4*   0x80)
 
   ;; Storage Locations
   (def '*owner*            0x00)
@@ -19,12 +19,20 @@
   (def '*access*                 0x6d43c4c9) ;; access(bytes32)
   (def '*get-access*             0x42082e50) ;; getAccess(address,address,uint256)
   (def '*interfaces*             0xd01e14ce) ;; interfaces(address)
-  (def '*get-owner*                  0x8da5cb5b) ;; owner()
+  (def '*get-owner*              0x8da5cb5b) ;; owner()
   (def '*set-access*             0x082f9065) ;; setAccess(address,address,bool,uint256)
   (def '*set-address-interface*  0x7cc7378c) ;; setAddressInterface(address,bytes4)
 
   ;; store shipment hash mapping location as just the hash
   (def 'shipments (shipHash) shipHash)
+
+  ;; storing access hash at s[contract + keccak(member, type)]
+  (def 'access (contract member type) 
+    (seq 
+      (mstore *scratch1* member)
+      (mstore *scratch2* type)
+      (+ contract (keccak256 *scratch1* 0x40))
+  ))
 
   ;; Shifts the leftmost 4 bytes of a 32-byte number right by 28 bytes.
   (def 'shift-right (input)
@@ -38,6 +46,7 @@
     (when (= (mload *funcid*) function-hash)
       code-body))
 
+  ;;; Constructor
   (when(callvalue)
     (panic))
   (sstore *owner* (caller))
@@ -61,5 +70,25 @@
       (function *confirm-shipment*
         (seq
           (def 'shipment (calldataload 0x04))
-          (sstore (shipments shipment) (+ (sload (shipments shipment)) 1))      ))
+          (sstore (shipments shipment) (+ (sload (shipments shipment)) 1))
+      ))
+
+
+     (function *get-access*
+       (seq
+         (def 'contract   (calldataload 0x04))
+         (def 'member     (calldataload 0x24))
+         (def 'type       (calldataload 0x44))
+         (return (sload (access contract member type)))
+     ))
+
+
+     (function *set-access*
+       (seq
+         (def 'contract   (calldataload 0x04))
+         (def 'member     (calldataload 0x24))
+         (def 'hasAccess  (calldataload 0x44))
+         (def 'type       (calldataload 0x64))
+         (sstore (access contract member type) hasAccess)
+     ))
 )))
