@@ -1,3 +1,5 @@
+![travis](https://travis-ci.org/Dsummers91/enroute-db.svg?branch=master)
+
 ### Running the App
 ```
 npm install
