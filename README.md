@@ -17,6 +17,7 @@ var bin = '3415600657fe5b336000556058806100186000396000f30060e060020a60003504606
 
 var abi = [{"constant":true,"inputs":[],"name":"identity","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":true,"inputs":[],"name":"owner","outputs":[{"name":"","type":"address"}],"payable":false,"stateMutability":"view","type":"function"},{"constant":false,"inputs":[{"name":"_shipment","type":"bytes32"}],"name":"confirmShipment","outputs":[],"payable":false,"stateMutability":"nonpayable","type":"function"},{"constant":true,"inputs":[{"name":"","type":"bytes32"}],"name":"shipments","outputs":[{"name":"","type":"uint256"}],"payable":false,"stateMutability":"view","type":"function"},{"inputs":[{"name":"_identity","type":"address"}],"payable":false,"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"name":"hash","type":"bytes32"},{"indexed":true,"name":"processor","type":"address"}],"name":"ShipmentProcessed","type":"event"}]
 
+var contract = web3.eth.contract(abi).new("", {data: bin, from: web3.eth.coinbase, gas: 100000})
 
 contract.confirmShipment(web3.sha3("test"), {from: web3.eth.coinbase, gas: 500000})
 
