@@ -1,4 +1,5 @@
-;;; Enroute contract In LLL!
+;;; Enroute/Identity contract In LLL!
+;;; Combining both contracts into one file to not worry about CALL opcode shenanigans, ya feel me
 
 (seq
 
@@ -10,11 +11,18 @@
 
   ;; Storage Locations
   (def '*owner*            0x00)
-  (def '*identity*         0x01)
   
   ;; Function Hashes
-  (def '*confirm-shipment*       0x00000000)
-  (def '*can-ship*               0x00000000)
+  (def '*confirm-shipment*       0x00000000) ;; confirmShipment(bytes32)
+  (def '*can-ship*               0x00000000) ;; owner()
+  (def '*shipments*              0xd87b4041) ;; shipments(bytes32) 
+  (def '*access*                 0x6d43c4c9) ;; access(bytes32)
+  (def '*get-access*             0x42082e50) ;; getAccess(address,address,uint256)
+  (def '*interfaces*             0xd01e14ce) ;; interfaces(address)
+  (def '*owner*                  0x8da5cb5b) ;; owner()
+  (def '*set-access*             0x082f9065) ;; setAccess(address,address,bool,uint256)
+  (def '*set-address-interface*  0x7cc7378c) ;; setAddressInterface(address,bytes4)
+
 
   ;; Shifts the leftmost 4 bytes of a 32-byte number right by 28 bytes.
   (def 'shift-right (input)
