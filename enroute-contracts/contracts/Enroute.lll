@@ -23,6 +23,8 @@
   (def '*set-access*             0x082f9065) ;; setAccess(address,address,bool,uint256)
   (def '*set-address-interface*  0x7cc7378c) ;; setAddressInterface(address,bytes4)
 
+	;; store shipment hash mapping location as just the hash
+	(def 'shipments (shipHash) shipHash)
 
   ;; Shifts the leftmost 4 bytes of a 32-byte number right by 28 bytes.
   (def 'shift-right (input)
@@ -48,4 +50,17 @@
         (seq
           (return (sload *owner*))
       ))
+
+			(function *shipments*
+				(seq
+					(def 'shipment (calldataload 0x04))
+					(return (sload (shipments shipment)))
+			))
+
+
+			(function *confirm-shipment*
+				(seq
+					(def 'shipment (calldataload 0x04))
+					(sstore (shipments shipment) (+ (sload (shipments shipment)) 1))
+			))
 )))
