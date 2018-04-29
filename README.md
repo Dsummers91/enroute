@@ -1,3 +1,13 @@
+### Running the App
+```
+npm install
+cd enroute-contracts
+truffle migrate --reset
+npm start
+```
+
+### LLL
+
 Contracts are written in solidity but also writing some contracts in LLL which is an alternative to solidity.
 
 
