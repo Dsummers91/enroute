@@ -19,7 +19,7 @@
   (def '*access*                 0x6d43c4c9) ;; access(bytes32)
   (def '*get-access*             0x42082e50) ;; getAccess(address,address,uint256)
   (def '*interfaces*             0xd01e14ce) ;; interfaces(address)
-  (def '*owner*                  0x8da5cb5b) ;; owner()
+  (def '*get-owner*                  0x8da5cb5b) ;; owner()
   (def '*set-access*             0x082f9065) ;; setAccess(address,address,bool,uint256)
   (def '*set-address-interface*  0x7cc7378c) ;; setAddressInterface(address,bytes4)
 
@@ -40,4 +40,12 @@
     (panic))
   (sstore *owner* (caller))
 
-)
+  (returnlll
+    (seq
+      get-function-id
+
+			(function *get-owner*
+        (seq
+          (return (sload *owner*))
+      ))
+)))
